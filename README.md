@@ -21,15 +21,17 @@ dokku <command>     runs dokku commands on the server attached to this app
 ### dokkufy server
 
 ```sh
-dokkufy server <hostname> <username> <domain>
+dokkufy server <hostname> <username> <domain> --version <version>
 ```
 
 Installs dokku on server at IP or Hostname `<hostname>`, using the `<username>` account to install the software.
 
 It also sets up the app on domain `<domain>`, resulting in all apps being served as a subdomain of that domain.
 
+Optionally this takes a `<version>` to specify the [Dokku tag](https://github.com/progrium/dokku/tags).
 ## Release notes
 
+* **0.0.3** Determines latest version from Dokku github page
 * **0.0.2** Added `server` command
 * **0.0.1** Gem skeleton
 

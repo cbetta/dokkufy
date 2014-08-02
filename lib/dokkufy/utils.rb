@@ -1,3 +1,5 @@
+require 'open-uri'
+
 module Dokkufy
   module Utils
     def self.scripts_directory
@@ -9,6 +11,13 @@ module Dokkufy
 
     def self.script name
       File.join(scripts_directory, "#{name}.sh")
+    end
+
+    def self.stable_version
+      uri = "https://github.com/progrium/dokku/releases/latest"
+      open(uri) do |resp|
+        return resp.base_uri.to_s.split("/").last
+      end
     end
   end
 end

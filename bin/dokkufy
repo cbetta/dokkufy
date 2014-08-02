@@ -16,7 +16,7 @@ Commander.configure do
       hostname = args[0] || ask('Server hostname or IP: ')
       username = args[1] || ask('Username on server: ')
       domain   = args[2] || ask('Desired root domain (e.g. example.com): ')
-      version  = options.version.nil? ? 'master' : "v#{options.version}"
+      version  = options.version.nil? ? Dokkufy::Utils.stable_version : "v#{options.version}"
 
       server = Dokkufy::Server.new(hostname, username)
       server.ensure_passwordless_sudo
