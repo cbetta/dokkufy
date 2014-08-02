@@ -24,9 +24,9 @@ dokku <command>     runs dokku commands on the server attached to this app
 dokkufy server <hostname> <username> <domain>
 ```
 
-Installs dokku on server at IP or Hostname `<hostname>`, using user `<username>` to install the software.
+Installs dokku on server at IP or Hostname `<hostname>`, using the `<username>` account to install the software.
 
-It also sets up the app on domain <domain>, resulting in all apps being served as a subdomain of that domain.
+It also sets up the app on domain `<domain>`, resulting in all apps being served as a subdomain of that domain.
 
 ## Release notes
 
