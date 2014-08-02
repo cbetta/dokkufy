@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+require 'dokkufy'
+require 'commander'
+
+Commander.configure do
+  program :name, 'Dokkufy'
+  program :version, Dokkufy::VERSION
+  program :description, 'An interactive script to enable Dokku on a server'
+  program :help, 'Author', 'Cristiano Betta <cbetta@gmail.com>'
+
+  command :'install' do |c|
+    c.action do
+      host = ask('Server hostname or IP: ')
+      username = ask('Username on server: ')
+      
+      server = Dokkufy::Server.new(host, username)
+      server.ensure_passwordless_sudo
+      server.install_dokku
+
+      hostname = ask('Desired hostname (e.g. example.com): ')
+      server.configure_vhost(hostname)
+      server.setup_key
+    end
+  end
+
+  default_command :help
+end
