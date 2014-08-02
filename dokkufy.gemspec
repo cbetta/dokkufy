@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Cristiano Betta"]
   s.email       = ["cbetta@gmail.com"]
   s.homepage    = "http://github.com/cbetta/dokkufy"
-  s.summary     = "An interactive script to enable Dokku on a server"
-  s.description = "An interactive script to enable Dokku on a server"
+  s.summary     = Dokkufy::DESCRIPTION
+  s.description = Dokkufy::DESCRIPTION
   s.license     = 'MIT'
 
   s.files         = `git ls-files`.split("\n")
