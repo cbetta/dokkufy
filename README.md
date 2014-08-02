@@ -1,8 +1,6 @@
 # Dokkufy
 
-A Dokkufy toolbelt.
-
-Inspired by [Dokku](https://github.com/progrium/dokku) and the [Heroku toolbelt](https://toolbelt.heroku.com/)
+A [Dokku](https://github.com/progrium/dokku) toolbelt inspired by the [Heroku toolbelt](https://toolbelt.heroku.com/)
 
 ## Planned commands
 
@@ -17,3 +15,32 @@ dokkufy <command>
 
 dokku <command>     runs dokku commands on the server attached to this app
 ```
+
+## Implemented commands
+
+### dokkufy server
+
+```sh
+dokkufy server <hostname> <username> <domain>
+```
+
+Installs dokku on server at IP or Hostname `<hostname>`, using user `<username>` to install the software.
+
+It also sets up the app on domain <domain>, resulting in all apps being served as a subdomain of that domain.
+
+## Release notes
+
+* **0.0.2** Added `server` command
+* **0.0.1** Gem skeleton
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create new Pull Request
+
+## License
+
+See [LICENSE](https://github.com/cbetta/dokkufy/blob/master/LICENSE)

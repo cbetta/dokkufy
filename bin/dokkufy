@@ -8,17 +8,20 @@ Commander.configure do
   program :description, 'An interactive script to enable Dokku on a server'
   program :help, 'Author', 'Cristiano Betta <cbetta@gmail.com>'
 
-  command :'install' do |c|
-    c.action do
-      host = ask('Server hostname or IP: ')
-      username = ask('Username on server: ')
+  command :'server' do |c|
+    c.syntax = 'dokkufy server <hostname> <username> <domain>'
+    c.description = "Installs Dokku on a Ubuntu 12.04 or 14.04 server"
+    c.option '--version', Float, 'Dokku version'
+    c.action do |args, options|
+      hostname = args[0] || ask('Server hostname or IP: ')
+      username = args[1] || ask('Username on server: ')
+      domain   = args[2] || ask('Desired root domain (e.g. example.com): ')
+      version  = options.version.nil? ? 'master' : "v#{options.version}"
 
-      server = Dokkufy::Server.new(host, username)
+      server = Dokkufy::Server.new(hostname, username)
       server.ensure_passwordless_sudo
-      server.install_dokku
-
-      hostname = ask('Desired hostname (e.g. example.com): ')
-      server.configure_vhost(hostname)
+      server.install_dokku(version)
+      server.configure_vhost(domain)
       server.setup_key
     end
   end
