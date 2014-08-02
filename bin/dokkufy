@@ -12,7 +12,7 @@ Commander.configure do
     c.action do
       host = ask('Server hostname or IP: ')
       username = ask('Username on server: ')
-      
+
       server = Dokkufy::Server.new(host, username)
       server.ensure_passwordless_sudo
       server.install_dokku
