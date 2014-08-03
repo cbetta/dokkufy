@@ -7,6 +7,13 @@ module Dokkufy
       self.username = username
     end
 
+    def dokkufy(domain)
+      ensure_passwordless_sudo
+      install_dokku(version)
+      configure_vhost(domain)
+      setup_key
+    end
+
     def setup_key
       user = `echo $USER`
       command = "cat ~/.ssh/id_rsa.pub | ssh #{username}@#{hostname} 'sudo sshcommand acl-add dokku #{user}'"

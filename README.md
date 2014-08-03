@@ -11,6 +11,7 @@ dokkufy <command>
   server:upgrade    upgrades a Dokku server
   plugin            shows a list of Dokku plugins
   plugin:install    installs a plugin on the server
+  plugin:uninstall  uninstalls a plugin on the server
   app               adds a dokku remote for a server to an app
 
 dokku <command>     runs dokku commands on the server attached to this app
@@ -31,6 +32,7 @@ It also sets up the app on domain `<domain>`, resulting in all apps being served
 Optionally this takes a `<version>` to specify the [Dokku tag](https://github.com/progrium/dokku/tags).
 ## Release notes
 
+* **0.0.4** Adds plugin listing and installing
 * **0.0.3** Determines latest version from Dokku github page
 * **0.0.2** Added `server` command
 * **0.0.1** Gem skeleton

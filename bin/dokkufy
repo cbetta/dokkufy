@@ -20,10 +20,7 @@ Commander.configure do
       version  = options.version.nil? ? Dokkufy::Utils.stable_version : "v#{options.version}"
 
       server = Dokkufy::Server.new(hostname, username)
-      server.ensure_passwordless_sudo
-      server.install_dokku(version)
-      server.configure_vhost(domain)
-      server.setup_key
+      server.dokkufy(domain)
     end
   end
 
@@ -32,8 +29,7 @@ Commander.configure do
     c.description = "Lists known Dokku plugins"
     c.option('--with-notes'){ $with_notes = true }
     c.action do |args, options|
-      plugins = Dokkufy::Plugin.all($with_notes)
-      puts Terminal::Table.new rows: plugins, headings: ["ID", "Name", "Description"]
+      puts Terminal::Table.new rows: Dokkufy::Plugin.all($with_notes), headings: ["ID", "Name", "Description"]
     end
   end
 
