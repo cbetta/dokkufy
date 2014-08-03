@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'dokkufy'
 require 'commander'
+require 'terminal-table'
 
 Commander.configure do
   program :name, 'Dokkufy'
@@ -9,7 +10,7 @@ Commander.configure do
   program :help, 'Author', 'Cristiano Betta <cbetta@gmail.com>'
 
   command :'server' do |c|
-    c.syntax = 'dokkufy server <hostname> <username> <domain>'
+    c.syntax = 'dokkufy server [<hostname> <username> <domain>]'
     c.description = "Installs Dokku on a Ubuntu 12.04 or 14.04 server"
     c.option '--version', Float, 'Dokku version'
     c.action do |args, options|
@@ -23,6 +24,27 @@ Commander.configure do
       server.install_dokku(version)
       server.configure_vhost(domain)
       server.setup_key
+    end
+  end
+
+  command :'plugin:list' do |c|
+    c.syntax = 'dokkufy plugin:list'
+    c.description = "Lists known Dokku plugins"
+    c.option('--with-notes'){ $with_notes = true }
+    c.action do |args, options|
+      plugins = Dokkufy::Plugin.all($with_notes)
+      puts Terminal::Table.new rows: plugins, headings: ["ID", "Name", "Description"]
+    end
+  end
+
+  command :'plugin:install' do |c|
+    c.syntax = 'dokkufy plugin:install <plugin_name_or_id> [<hostname> <username>]'
+    c.description = "Installs a known Dokku plugin"
+    c.action do |args, options|
+      id_or_name  = args[0] || ask('Plugin ID or Name: ')
+      hostname    = args[1] || ask('Server hostname or IP: ')
+      username    = args[2] || ask('Username on server: ')
+      Dokkufy::Plugin.new(hostname, username).install(id_or_name)
     end
   end
 

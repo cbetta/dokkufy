@@ -1,8 +1,10 @@
 PATH
   remote: .
   specs:
-    dokkufy (0.0.1)
+    dokkufy (0.0.3)
       commander
+      hpricot
+      terminal-table
 
 GEM
   remote: https://rubygems.org/
@@ -10,6 +12,8 @@ GEM
     commander (4.2.0)
       highline (~> 1.6.11)
     highline (1.6.21)
+    hpricot (0.8.6)
+    terminal-table (1.4.5)
 
 PLATFORMS
   ruby
