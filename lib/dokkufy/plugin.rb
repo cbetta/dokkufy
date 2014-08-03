@@ -19,11 +19,12 @@ module Dokkufy
     def self.all with_notes = false
       open("https://github.com/progrium/dokku/wiki/Plugins") do |f|
         hp = Hpricot(f)
-        plugins = hp.search("tbody:first tr td").each_slice(3)
+        plugins = hp.search("tbody tr td").each_slice(3)
         return plugins.each_with_index.map do |plugin, index|
+          first_element = plugin.first.children.reject{|e| e.inner_text.strip == ""}.first
           entry = [index+1,
-            plugin.first.children.first.attributes["href"].split("github.com/").last,
-            plugin.first.children.first.inner_text]
+            first_element.attributes["href"].split("github.com/").last,
+            first_element.inner_text]
           entry << plugin.last.inner_text if with_notes
           entry
         end
