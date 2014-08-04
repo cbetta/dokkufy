@@ -20,7 +20,7 @@ Commander.configure do
       version  = options.version.nil? ? Dokkufy::Utils.stable_version : "v#{options.version}"
 
       server = Dokkufy::Server.new(hostname, username)
-      server.dokkufy(domain)
+      server.dokkufy(version, domain)
     end
   end
 

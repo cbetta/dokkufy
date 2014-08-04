@@ -7,7 +7,7 @@ module Dokkufy
       self.username = username
     end
 
-    def dokkufy(domain)
+    def dokkufy(version, domain)
       ensure_passwordless_sudo
       install_dokku(version)
       configure_vhost(domain)
@@ -25,8 +25,8 @@ module Dokkufy
       filename = Dokkufy::Utils.script method_name
       server = "#{username}@#{hostname}"
       `scp #{filename} #{server}:`
-      system("ssh -t #{server} 'OPTION=#{args.first} ./#{method_name}.sh'")
-      `ssh -t -q #{server} 'rm #{method_name}.sh'`
+      system("ssh -t #{server} 'OPTION1=#{args[0]} OPTION2=#{args[1]} ./#{method_name}.sh'")
+      `ssh -t -q #{server} 'rm ~/#{method_name}.sh'`
     end
   end
 end

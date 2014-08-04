@@ -1,1 +1,1 @@
-sudo bash -c "echo $OPTION > /home/dokku/VHOST"
+sudo bash -c "echo $OPTION1 > /home/dokku/VHOST"

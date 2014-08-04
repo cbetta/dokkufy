@@ -19,13 +19,15 @@ dokku <command>     runs dokku commands on the server attached to this app
 
 ## Implemented commands
 
+Most commands take their parameters as command line arguments or through an interactive prompt.
+
 ### dokkufy server
 
 ```sh
 dokkufy server <hostname> <username> <domain> --version <version>
 ```
 
-Installs dokku on server at IP or Hostname `<hostname>`, using the `<username>` account to install the software.
+Installs Dokku on server at IP or Hostname `<hostname>`, using the `<username>` account to install the software.
 
 It also sets up the app on domain `<domain>`, resulting in all apps being served as a subdomain of that domain.
 
@@ -39,8 +41,17 @@ dokkufy plugin:list
 
 Lists all plugins as listed on the [Dokku wiki](https://github.com/progrium/dokku/wiki/Plugins). Only supports plugins that follow the standard install procedure.
 
+### dokkufy plugin:install
+
+```sh
+dokkufy plugin:install <plugin_name_or_id> [<hostname> <username>]
+```
+
+Installs a Dokku plugin either by name or ID (as received by `dokkufy plugin:list`) on a server. Only supports the standard install procedure. Check the plugins wiki for any additional install notes.
+
 ## Release notes
 
+* **0.0.5** Small bug fix to plugin installs
 * **0.0.4** Adds plugin listing and installing
 * **0.0.3** Determines latest version from Dokku github page
 * **0.0.2** Added `server` command
