@@ -55,5 +55,32 @@ Commander.configure do
     end
   end
 
+  command :'app' do |c|
+    c.syntax = 'dokkufy app <git_repo> [OR <hostname> <dokku_username>]'
+    c.description = "Binds this app to a Dokku instance through git and a config file"
+    c.action do |args, options|
+      if args.empty?
+        git = Dokkufy::Git.new
+        if git.dokku_remote_present?
+          args = [git.dokku_remote]
+        else
+          hostname    = ask('Server hostname or IP: ')
+          username    = ask('Dokku username on server [dokku]: ')
+          username    = "dokku" if username.strip == ""
+          args = [hostname, username]
+        end
+      end
+      Dokkufy::App.new(args).dokkufy
+    end
+  end
+
+  command :'app:clear' do |c|
+    c.syntax = 'dokkufy app:clear'
+    c.description = "Undokkufies this app"
+    c.action do |args, options|
+      Dokkufy::Git.new.clear
+    end
+  end
+
   default_command :help
 end
