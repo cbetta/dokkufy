@@ -113,6 +113,7 @@ $ ssh -t dokku@example.com run test_app ls
 
 ## Release notes
 
+* **0.1.0** Adds the `dokku` command
 * **0.0.7** Adds the (un)dokkufication of apps
 * **0.0.6** Adds plugin uninstall
 * **0.0.5** Small bug fix to plugin installs
