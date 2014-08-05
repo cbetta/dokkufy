@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'dokkufy'
 
-if ['-v', '--version', '--help'].include?(ARGV[0])
+if ['-v', '--version', '--help'].include?(ARGV[0]) || ARGV.empty?
   puts "Dokkufy::Dokku #{Dokkufy::VERSION}"
   exit;
 end

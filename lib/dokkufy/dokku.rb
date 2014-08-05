@@ -7,15 +7,21 @@ module Dokkufy
     end
 
     def run args
+      args = args.insert(1,app_name) if requires_app_name?(args)
       output = `#{command(args)}`
-      if output.strip.end_with?("does not exist")
-        args = args.insert(1,app_name)
-        output = `#{command(args)}`
-      end
+      output.gsub!(" <app>", "") if args.first == 'help'
+
       puts output
     end
 
     private
+
+    def requires_app_name? args
+      help.lines.each do |line|
+        return line.include?("<app>") if line.strip.start_with?(args[0])
+      end
+      false
+    end
 
     def command args
       command = "ssh -t -q #{server} #{args.join(" ")}"
@@ -27,6 +33,10 @@ module Dokkufy
 
     def app_name
       @app_name ||= self.repo.split(":").last
+    end
+
+    def help
+      @help ||= `#{command(["help"])}`
     end
 
   end
