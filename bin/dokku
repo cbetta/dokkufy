@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require 'dokkufy'
+
+git = Dokkufy::Git.new
+if !git.dokku_remote_present?
+  puts "No Dokku remote found. Run `dokkufy app` first."
+else
+  Dokkufy::Dokku.new(git.dokku_remote).run(ARGV)
+end

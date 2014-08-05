@@ -22,6 +22,7 @@ module Dokkufy
     def dokkufy
       puts "Using #{repo}"
       Dokkufy::Git.new.dokku_remote = repo
+      puts "You can now push your app using `git push dokku master`"
     end
 
   end

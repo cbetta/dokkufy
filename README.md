@@ -2,7 +2,20 @@
 
 A [Dokku](https://github.com/progrium/dokku) toolbelt inspired by the [Heroku toolbelt](https://toolbelt.heroku.com/)
 
-## Planned commands
+## Basic usage
+
+Want to build your own Heroku? Dokku and Dokkufy make this possible.
+
+1. Spin up a Ubuntu 12.04 or 14.04 server
+2. Dokkufy your server using `dokkufy server`
+3. Change directories to your app
+4. Dokkufy your app `dokkufy app`
+5. Deploy your app `git push dokku master`
+6. Control your app using the `dokku` command (see `dokku help` for available commands)
+
+## Commands
+
+Most commands take their parameters as command line arguments or through an interactive prompt.
 
 ```
 dokkufy <command>
@@ -17,10 +30,6 @@ dokkufy <command>
 
 dokku <command>     runs dokku commands on the server attached to this app
 ```
-
-## Implemented commands
-
-Most commands take their parameters as command line arguments or through an interactive prompt.
 
 ### dokkufy server
 
@@ -73,6 +82,34 @@ dokkufy app:clear
 ```
 
 Removes any `dokku` remotes for the local git repository and deletes the `.dokkurc` file.
+
+### dokku
+
+```sh
+dokku <command>
+```
+
+Runs the command on the Dokku server attached to this app. Intelligently determines the remote address if the app has been dokkufied, and automatically adds the app name where needed.
+
+Some examples:
+
+```sh
+dokku help    # runs `dokku help` on server
+dokku run ls  # runs `dokku run <app_name> ls` on server
+```
+
+Every `dokku` command translates to an auto generated ssh call. The `<app_name>` is automatically added if the response returns a "App <command> not found".
+
+Some examples
+
+```sh
+cat .dokkurc # content of the .dokkurc
+$ dokku@example.com:test_app
+dokku help
+$ ssh -t dokku@example.com help # the actual command executed
+dokku run ls # a command that requires an app name
+$ ssh -t dokku@example.com run test_app ls
+```
 
 ## Release notes
 
