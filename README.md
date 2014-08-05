@@ -2,6 +2,12 @@
 
 A [Dokku](https://github.com/progrium/dokku) toolbelt inspired by the [Heroku toolbelt](https://toolbelt.heroku.com/)
 
+## Installation
+
+```
+gem install dokkufy
+```
+
 ## Basic usage
 
 Want to build your own Heroku? Dokku and Dokkufy make this possible.
@@ -113,6 +119,7 @@ $ ssh -t dokku@example.com run test_app ls
 
 ## Release notes
 
+<<<<<<< HEAD
 * **0.1.3** Applies double install fix on 14.04
 * **0.1.0** Adds the `dokku` command
 * **0.0.7** Adds the (un)dokkufication of apps
