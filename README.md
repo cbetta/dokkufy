@@ -1,6 +1,6 @@
 # Dokkufy
 
-[![Gem Version](https://badge.fury.io/rb/dokkufy.svg)](http://badge.fury.io/rb/dokkufy) ![](http://ruby-gem-downloads-badge.herokuapp.com/dokkufy?type=total)
+[![Gem Version](https://badge.fury.io/rb/dokkufy.svg)](http://badge.fury.io/rb/dokkufy) [![Code Climate](https://codeclimate.com/github/cbetta/dokkufy/badges/gpa.svg)](https://codeclimate.com/github/cbetta/dokkufy) ![](http://ruby-gem-downloads-badge.herokuapp.com/dokkufy?type=total)
 
 
 A [Dokku](https://github.com/progrium/dokku) toolbelt inspired by the [Heroku toolbelt](https://toolbelt.heroku.com/)
