@@ -25,7 +25,7 @@ module Dokkufy
       filename = Dokkufy::Utils.script method_name
       server = "#{username}@#{hostname}"
       `scp #{filename} #{server}:`
-      system("ssh -t #{server} 'OPTION1=#{args[0]} OPTION2=#{args[1]} ./#{method_name}.sh'")
+      system("ssh -t -q #{server} 'OPTION1=#{args[0]} OPTION2=#{args[1]} ./#{method_name}.sh'")
       `ssh -t -q #{server} 'rm ~/#{method_name}.sh'`
     end
   end

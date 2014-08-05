@@ -49,8 +49,17 @@ dokkufy plugin:install <plugin_name_or_id> [<hostname> <username>]
 
 Installs a Dokku plugin either by name or ID (as received by `dokkufy plugin:list`) on a server. Only supports the standard install procedure. Check the plugins wiki for any additional install notes.
 
+### dokkufy plugin:uninstall
+
+```sh
+dokkufy plugin:uninstall <plugin_name_or_id> [<hostname> <username>]
+```
+
+Uninstalls a Dokku plugin either by name or ID (as received by `dokkufy plugin:list`) on a server. Simply performs a delete of the folder. Server instances already deployed with this plugin will need to be redeployed.
+
 ## Release notes
 
+* **0.0.6** Adds plugin uninstall
 * **0.0.5** Small bug fix to plugin installs
 * **0.0.4** Adds plugin listing and installing
 * **0.0.3** Determines latest version from Dokku github page

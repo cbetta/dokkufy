@@ -44,5 +44,16 @@ Commander.configure do
     end
   end
 
+  command :'plugin:uninstall' do |c|
+    c.syntax = 'dokkufy plugin:uninstall <plugin_name_or_id> [<hostname> <username>]'
+    c.description = "Uninstalls a known Dokku plugin"
+    c.action do |args, options|
+      id_or_name  = args[0] || ask('Plugin ID or Name: ')
+      hostname    = args[1] || ask('Server hostname or IP: ')
+      username    = args[2] || ask('Username on server: ')
+      Dokkufy::Plugin.new(hostname, username).uninstall(id_or_name)
+    end
+  end
+
   default_command :help
 end

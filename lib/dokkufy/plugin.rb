@@ -16,6 +16,11 @@ module Dokkufy
       Dokkufy::Server.new(hostname, username).install_plugin(path, name)
     end
 
+    def uninstall id_or_name
+      self.path = id_or_name
+      Dokkufy::Server.new(hostname, username).uninstall_plugin(path, name)
+    end
+
     def self.all with_notes = false
       return @plugins if @plugins
       open("https://github.com/progrium/dokku/wiki/Plugins") do |f|
