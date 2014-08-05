@@ -2,6 +2,12 @@
 
 A [Dokku](https://github.com/progrium/dokku) toolbelt inspired by the [Heroku toolbelt](https://toolbelt.heroku.com/)
 
+## Installation
+
+```
+gem install dokkufy
+```
+
 ## Basic usage
 
 Want to build your own Heroku? Dokku and Dokkufy make this possible.
