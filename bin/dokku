@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
 require 'dokkufy'
 
+if ['-v', '--version', '--help'].include?(ARGV[0])
+  puts "Dokkufy::Dokku #{Dokkufy::VERSION}"
+  exit;
+end
+
 git = Dokkufy::Git.new
 if !git.dokku_remote_present?
   puts "No Dokku remote found. Run `dokkufy app` first."
