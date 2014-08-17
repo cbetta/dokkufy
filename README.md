@@ -31,7 +31,7 @@ dokkufy <command>
   help              shows this list
   server            installs Dokku on a Ubuntu 12.04 or 14.04 server
   server:upgrade    upgrades a Dokku server
-  plugin:all		Lists all known Dokku plugins
+  plugin:all        Lists all known Dokku plugins
   plugin:list       Lists Dokku plugins installed on machine
   plugin:install    installs a plugin on the server
   plugin:uninstall  uninstalls a plugin on the server
@@ -67,7 +67,7 @@ Lists all plugins as listed on the [Dokku wiki](https://github.com/progrium/dokk
 dokkufy plugin:list
 ```
 
-Lists all plugins as listed that are installed on the machine.Requires hostname and username inroder to ssh.
+Lists all plugins as listed that are installed on the machine.Requires hostname and username inorder to ssh.
 
 
 ### dokkufy plugin:install
