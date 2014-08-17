@@ -16,7 +16,11 @@ module Dokkufy
 
     def setup_key
       user = `echo $USER`
-      command = "cat ~/.ssh/id_rsa.pub | ssh #{username}@#{hostname} 'sudo sshcommand acl-add dokku #{user}'"
+      public_key = "id_rsa.pub"
+      until File.exists?(File.expand_path("~/.ssh/#{public_key}")) do
+        public_key = ask "Enter public key file name(e.g. id_rsa.pub):"
+      end
+      command = "cat ~/.ssh/#{public_key} | ssh #{username}@#{hostname} 'sudo sshcommand acl-add dokku #{user}'"
       system command
     end
 
