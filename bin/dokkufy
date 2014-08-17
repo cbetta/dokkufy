@@ -24,12 +24,23 @@ Commander.configure do
     end
   end
 
-  command :'plugin:list' do |c|
-    c.syntax = 'dokkufy plugin:list'
-    c.description = "Lists known Dokku plugins"
+  command :'plugin:all' do |c|
+    c.syntax = 'dokkufy plugin:all'
+    c.description = "Lists all known Dokku plugins"
     c.option('--with-notes'){ $with_notes = true }
     c.action do |args, options|
       puts Terminal::Table.new rows: Dokkufy::Plugin.all($with_notes), headings: ["ID", "Name", "Description"]
+    end
+  end
+
+  command :'plugin:list' do |c|
+    c.syntax = 'dokkufy plugin:list'
+    c.description = "Lists Dokku plugins installed on machine"
+    c.option('--with-notes'){ $with_notes = true }
+    c.action do |args, options|
+      hostname    = args[1] || ask('Server hostname or IP: ')
+      username    = args[2] || ask('Username on server: ')
+      puts Terminal::Table.new rows: Dokkufy::Plugin.new(hostname, username).list, headings: ["ID","Name","Path"]
     end
   end
 
