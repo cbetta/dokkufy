@@ -21,21 +21,6 @@ module Dokkufy
       Dokkufy::Server.new(hostname, username).uninstall_plugin(path, name)
     end
 
-    def list
-      plugins = []
-      public_key = "id_rsa.pub"
-        until File.exists?(File.expand_path("~/.ssh/#{public_key}")) do
-          public_key = ask "Enter public key file name(e.g. id_rsa.pub):"
-        end
-      command = "cat ~/.ssh/#{public_key} | ssh #{username}@#{hostname} 'dokku plugins'"
-      output=IO.popen(command).readlines
-      output.each_with_index do |plugin_path,index| 
-        name = File.basename(plugin_path.chomp)
-        plugins.push [index+1,name,plugin_path]
-      end
-      plugins
-    end
-
     def self.all with_notes = false
       return @plugins if @plugins
       open("https://github.com/progrium/dokku/wiki/Plugins") do |f|
