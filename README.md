@@ -31,8 +31,7 @@ dokkufy <command>
   help              shows this list
   server            installs Dokku on a Ubuntu 12.04 or 14.04 server
   server:upgrade    upgrades a Dokku server
-  plugin:all        Lists all known Dokku plugins
-  plugin:list       Lists Dokku plugins installed on machine
+  plugin:list       shows a list of Dokku plugins
   plugin:install    installs a plugin on the server
   plugin:uninstall  uninstalls a plugin on the server
   app               adds a dokku remote for a server to an app
@@ -53,22 +52,13 @@ It also sets up the app on domain `<domain>`, resulting in all apps being served
 
 Optionally this takes a `<version>` to specify the [Dokku tag](https://github.com/progrium/dokku/tags).
 
-### dokkufy plugin:all
-
-```sh
-dokkufy plugin:all
-```
-
-Lists all plugins as listed on the [Dokku wiki](https://github.com/progrium/dokku/wiki/Plugins). Only supports plugins that follow the standard install procedure.
-
 ### dokkufy plugin:list
 
 ```sh
 dokkufy plugin:list
 ```
 
-Lists all plugins as listed that are installed on the machine.Requires hostname and username inorder to ssh.
-
+Lists all plugins as listed on the [Dokku wiki](https://github.com/progrium/dokku/wiki/Plugins). Only supports plugins that follow the standard install procedure.
 
 ### dokkufy plugin:install
 
@@ -132,8 +122,6 @@ $ ssh -t dokku@example.com run test_app ls
 
 ## Release notes
 
-* **0.1.5** Display installed plugins
-* **0.1.4** Missing public key fix
 * **0.1.3** Applies double install fix on 14.04
 * **0.1.0** Adds the `dokku` command
 * **0.0.7** Adds the (un)dokkufication of apps
