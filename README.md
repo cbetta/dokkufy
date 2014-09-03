@@ -122,7 +122,8 @@ $ ssh -t dokku@example.com run test_app ls
 
 ## Release notes
 
-* **0.1.5** Using classic style commander 
+* **0.1.6** Locking dependencies down further
+* **0.1.5** Using classic style commander
 * **0.1.4** Checks for SSH key before installing on server
 * **0.1.3** Applies double install fix on 14.04
 * **0.1.0** Adds the `dokku` command

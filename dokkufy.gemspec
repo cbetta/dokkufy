@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency 'commander'
-  s.add_dependency 'terminal-table'
-  s.add_dependency 'hpricot'
+  s.add_dependency 'commander', ["~> 4.2.0"]
+  s.add_dependency 'terminal-table', ["~> 1.4.5"]
+  s.add_dependency 'hpricot', ["~> 0.8.6"]
 end

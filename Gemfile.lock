@@ -1,10 +1,10 @@
 PATH
   remote: .
   specs:
-    dokkufy (0.1.2)
-      commander
-      hpricot
-      terminal-table
+    dokkufy (0.1.5)
+      commander (~> 4.2.0)
+      hpricot (~> 0.8.6)
+      terminal-table (~> 1.4.5)
 
 GEM
   remote: https://rubygems.org/
