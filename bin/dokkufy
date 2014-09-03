@@ -1,86 +1,84 @@
 #!/usr/bin/env ruby
 require 'dokkufy'
-require 'commander'
+require 'commander/import'
 require 'terminal-table'
 
-Commander.configure do
-  program :name, 'Dokkufy'
-  program :version, Dokkufy::VERSION
-  program :description, 'An interactive script to enable Dokku on a server'
-  program :help, 'Author', 'Cristiano Betta <cbetta@gmail.com>'
+program :name, 'Dokkufy'
+program :version, Dokkufy::VERSION
+program :description, 'An interactive script to enable Dokku on a server'
+program :help, 'Author', 'Cristiano Betta <cbetta@gmail.com>'
 
-  command :'server' do |c|
-    c.syntax = 'dokkufy server [<hostname> <username> <domain>]'
-    c.description = "Installs Dokku on a Ubuntu 12.04 or 14.04 server"
-    c.option '--version', Float, 'Dokku version'
-    c.action do |args, options|
-      hostname = args[0] || ask('Server hostname or IP: ')
-      username = args[1] || ask('Username on server: ')
-      domain   = args[2] || ask('Desired root domain (e.g. example.com): ')
-      version  = options.version.nil? ? Dokkufy::Utils.stable_version : "v#{options.version}"
+command :'server' do |c|
+  c.syntax = 'dokkufy server [<hostname> <username> <domain>]'
+  c.description = "Installs Dokku on a Ubuntu 12.04 or 14.04 server"
+  c.option '--version', Float, 'Dokku version'
+  c.action do |args, options|
+    hostname = args[0] || ask('Server hostname or IP: ')
+    username = args[1] || ask('Username on server: ')
+    domain   = args[2] || ask('Desired root domain (e.g. example.com): ')
+    version  = options.version.nil? ? Dokkufy::Utils.stable_version : "v#{options.version}"
 
-      server = Dokkufy::Server.new(hostname, username)
-      server.dokkufy(version, domain)
-    end
+    server = Dokkufy::Server.new(hostname, username)
+    server.dokkufy(version, domain)
   end
-
-  command :'plugin:list' do |c|
-    c.syntax = 'dokkufy plugin:list'
-    c.description = "Lists known Dokku plugins"
-    c.option('--with-notes'){ $with_notes = true }
-    c.action do |args, options|
-      puts Terminal::Table.new rows: Dokkufy::Plugin.all($with_notes), headings: ["ID", "Name", "Description"]
-    end
-  end
-
-  command :'plugin:install' do |c|
-    c.syntax = 'dokkufy plugin:install <plugin_name_or_id> [<hostname> <username>]'
-    c.description = "Installs a known Dokku plugin"
-    c.action do |args, options|
-      id_or_name  = args[0] || ask('Plugin ID or Name: ')
-      hostname    = args[1] || ask('Server hostname or IP: ')
-      username    = args[2] || ask('Username on server: ')
-      Dokkufy::Plugin.new(hostname, username).install(id_or_name)
-    end
-  end
-
-  command :'plugin:uninstall' do |c|
-    c.syntax = 'dokkufy plugin:uninstall <plugin_name_or_id> [<hostname> <username>]'
-    c.description = "Uninstalls a known Dokku plugin"
-    c.action do |args, options|
-      id_or_name  = args[0] || ask('Plugin ID or Name: ')
-      hostname    = args[1] || ask('Server hostname or IP: ')
-      username    = args[2] || ask('Username on server: ')
-      Dokkufy::Plugin.new(hostname, username).uninstall(id_or_name)
-    end
-  end
-
-  command :'app' do |c|
-    c.syntax = 'dokkufy app <git_repo> [OR <hostname> <dokku_username>]'
-    c.description = "Binds this app to a Dokku instance through git and a config file"
-    c.action do |args, options|
-      if args.empty?
-        git = Dokkufy::Git.new
-        if git.dokku_remote_present?
-          args = [git.dokku_remote]
-        else
-          hostname    = ask('Server hostname or IP: ')
-          username    = ask('Dokku username on server [dokku]: ')
-          username    = "dokku" if username.strip == ""
-          args = [hostname, username]
-        end
-      end
-      Dokkufy::App.new(args).dokkufy
-    end
-  end
-
-  command :'app:clear' do |c|
-    c.syntax = 'dokkufy app:clear'
-    c.description = "Undokkufies this app"
-    c.action do |args, options|
-      Dokkufy::Git.new.clear
-    end
-  end
-
-  default_command :help
 end
+
+command :'plugin:list' do |c|
+  c.syntax = 'dokkufy plugin:list'
+  c.description = "Lists known Dokku plugins"
+  c.option('--with-notes'){ $with_notes = true }
+  c.action do |args, options|
+    puts Terminal::Table.new rows: Dokkufy::Plugin.all($with_notes), headings: ["ID", "Name", "Description"]
+  end
+end
+
+command :'plugin:install' do |c|
+  c.syntax = 'dokkufy plugin:install <plugin_name_or_id> [<hostname> <username>]'
+  c.description = "Installs a known Dokku plugin"
+  c.action do |args, options|
+    id_or_name  = args[0] || ask('Plugin ID or Name: ')
+    hostname    = args[1] || ask('Server hostname or IP: ')
+    username    = args[2] || ask('Username on server: ')
+    Dokkufy::Plugin.new(hostname, username).install(id_or_name)
+  end
+end
+
+command :'plugin:uninstall' do |c|
+  c.syntax = 'dokkufy plugin:uninstall <plugin_name_or_id> [<hostname> <username>]'
+  c.description = "Uninstalls a known Dokku plugin"
+  c.action do |args, options|
+    id_or_name  = args[0] || ask('Plugin ID or Name: ')
+    hostname    = args[1] || ask('Server hostname or IP: ')
+    username    = args[2] || ask('Username on server: ')
+    Dokkufy::Plugin.new(hostname, username).uninstall(id_or_name)
+  end
+end
+
+command :'app' do |c|
+  c.syntax = 'dokkufy app <git_repo> [OR <hostname> <dokku_username>]'
+  c.description = "Binds this app to a Dokku instance through git and a config file"
+  c.action do |args, options|
+    if args.empty?
+      git = Dokkufy::Git.new
+      if git.dokku_remote_present?
+        args = [git.dokku_remote]
+      else
+        hostname    = ask('Server hostname or IP: ')
+        username    = ask('Dokku username on server [dokku]: ')
+        username    = "dokku" if username.strip == ""
+        args = [hostname, username]
+      end
+    end
+    Dokkufy::App.new(args).dokkufy
+  end
+end
+
+command :'app:clear' do |c|
+  c.syntax = 'dokkufy app:clear'
+  c.description = "Undokkufies this app"
+  c.action do |args, options|
+    Dokkufy::Git.new.clear
+  end
+end
+
+default_command :help
