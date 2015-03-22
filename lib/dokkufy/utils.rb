@@ -1,22 +1,25 @@
 require 'open-uri'
 
 module Dokkufy
+  # General utility functions used by other modules
   module Utils
     def self.scripts_directory
-      t = [File.expand_path("#{File.dirname(File.expand_path($0))}/../scripts"),
-           "#{Gem.dir}/gems/#{Dokkufy::NAME}-#{Dokkufy::VERSION}/scripts"]
-      t.each {|i| return i if File.readable?(i) }
-      raise "No scripts found"
+      gem_bin_directory = File.dirname(File.expand_path($PROGRAM_NAME))
+      scripts_directory = "#{gem_bin_directory}/../scripts"
+      paths = [File.expand_path(scripts_directory),
+               "#{Gem.dir}/gems/#{Dokkufy::NAME}-#{Dokkufy::VERSION}/scripts"]
+      paths.each { |path| return path if File.readable?(path) }
+      fail 'No scripts found'
     end
 
-    def self.script name
+    def self.script(name)
       File.join(scripts_directory, "#{name}.sh")
     end
 
     def self.stable_version
-      uri = "https://github.com/progrium/dokku/releases/latest"
+      uri = 'https://github.com/progrium/dokku/releases/latest'
       open(uri) do |resp|
-        return resp.base_uri.to_s.split("/").last
+        return resp.base_uri.to_s.split('/').last
       end
     end
   end

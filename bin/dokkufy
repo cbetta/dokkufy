@@ -10,13 +10,17 @@ program :help, 'Author', 'Cristiano Betta <cbetta@gmail.com>'
 
 command :'server' do |c|
   c.syntax = 'dokkufy server [<hostname> <username> <domain>]'
-  c.description = "Installs Dokku on a Ubuntu 12.04 or 14.04 server"
+  c.description = 'Installs Dokku on a Ubuntu 12.04 or 14.04 server'
   c.option '--version', Float, 'Dokku version'
   c.action do |args, options|
     hostname = args[0] || ask('Server hostname or IP: ')
     username = args[1] || ask('Username on server: ')
     domain   = args[2] || ask('Desired root domain (e.g. example.com): ')
-    version  = options.version.nil? ? Dokkufy::Utils.stable_version : "v#{options.version}"
+    version  = if options.version.nil?
+                 Dokkufy::Utils.stable_version
+               else
+                 "v#{options.version}"
+               end
 
     server = Dokkufy::Server.new(hostname, username)
     server.dokkufy(version, domain)
@@ -25,17 +29,19 @@ end
 
 command :'plugin:list' do |c|
   c.syntax = 'dokkufy plugin:list'
-  c.description = "Lists known Dokku plugins"
-  c.option('--with-notes'){ $with_notes = true }
-  c.action do |args, options|
-    puts Terminal::Table.new rows: Dokkufy::Plugin.all($with_notes), headings: ["ID", "Name", "Description"]
+  c.description = 'Lists known Dokku plugins'
+  c.option('--with-notes') { @with_notes = true }
+  c.action do |_args, _options|
+    puts Terminal::Table.new rows: Dokkufy::Plugin.all(@with_notes),
+                             headings: %w(ID Name Description)
   end
 end
 
 command :'plugin:install' do |c|
-  c.syntax = 'dokkufy plugin:install <plugin_name_or_id> [<hostname> <username>]'
-  c.description = "Installs a known Dokku plugin"
-  c.action do |args, options|
+  c.syntax = 'dokkufy plugin:install <plugin_name_or_id> '\
+             '[<hostname> <username>]'
+  c.description = 'Installs a known Dokku plugin'
+  c.action do |args, _options|
     id_or_name  = args[0] || ask('Plugin ID or Name: ')
     hostname    = args[1] || ask('Server hostname or IP: ')
     username    = args[2] || ask('Username on server: ')
@@ -44,9 +50,10 @@ command :'plugin:install' do |c|
 end
 
 command :'plugin:uninstall' do |c|
-  c.syntax = 'dokkufy plugin:uninstall <plugin_name_or_id> [<hostname> <username>]'
-  c.description = "Uninstalls a known Dokku plugin"
-  c.action do |args, options|
+  c.syntax = 'dokkufy plugin:uninstall <plugin_name_or_id> '\
+             '[<hostname> <username>]'
+  c.description = 'Uninstalls a known Dokku plugin'
+  c.action do |args, _options|
     id_or_name  = args[0] || ask('Plugin ID or Name: ')
     hostname    = args[1] || ask('Server hostname or IP: ')
     username    = args[2] || ask('Username on server: ')
@@ -56,8 +63,9 @@ end
 
 command :'app' do |c|
   c.syntax = 'dokkufy app <git_repo> [OR <hostname> <dokku_username>]'
-  c.description = "Binds this app to a Dokku instance through git and a config file"
-  c.action do |args, options|
+  c.description = 'Binds this app to a Dokku instance through git '\
+                  'and a config file'
+  c.action do |args, _options|
     if args.empty?
       git = Dokkufy::Git.new
       if git.dokku_remote_present?
@@ -65,7 +73,7 @@ command :'app' do |c|
       else
         hostname    = ask('Server hostname or IP: ')
         username    = ask('Dokku username on server [dokku]: ')
-        username    = "dokku" if username.strip == ""
+        username    = 'dokku' if username.strip == ''
         args = [hostname, username]
       end
     end
@@ -75,8 +83,8 @@ end
 
 command :'app:clear' do |c|
   c.syntax = 'dokkufy app:clear'
-  c.description = "Undokkufies this app"
-  c.action do |args, options|
+  c.description = 'Undokkufies this app'
+  c.action do |_args, _options|
     Dokkufy::Git.new.clear
   end
 end

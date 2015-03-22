@@ -1,8 +1,9 @@
 module Dokkufy
+  # Dokkufy your server
   class Server
     attr_accessor :hostname, :username
 
-    def initialize hostname, username
+    def initialize(hostname, username)
       self.hostname = hostname
       self.username = username
     end
@@ -16,20 +17,24 @@ module Dokkufy
 
     def setup_key
       user = `echo $USER`
-      public_key = "id_rsa.pub"
-      until File.exists?(File.expand_path("~/.ssh/#{public_key}")) do
-        public_key = ask "Enter public key file name(e.g. id_rsa.pub):"
+      public_key = 'id_rsa.pub'
+      until File.exist?(File.expand_path("~/.ssh/#{public_key}"))
+        public_key = ask 'Enter public key file name(e.g. id_rsa.pub):'
       end
-      command = "cat ~/.ssh/#{public_key} | ssh #{username}@#{hostname} 'sudo sshcommand acl-add dokku #{user}'"
+      cat_key = "cat ~/.ssh/#{public_key}"
+      acl_add_user = "'sudo sshcommand acl-add dokku #{user}'"
+      ssh_add_user = "ssh #{username}@#{hostname} #{acl_add_user}"
+      command = "#{cat_key} | #{ssh_add_user}"
       system command
     end
 
-    def method_missing(m, *args, &block)
+    def method_missing(m, *args, &_block)
       method_name = m.to_s
       filename = Dokkufy::Utils.script method_name
       server = "#{username}@#{hostname}"
       `scp #{filename} #{server}:`
-      system("ssh -t -q #{server} 'OPTION1=#{args[0]} OPTION2=#{args[1]} ./#{method_name}.sh'")
+      options = "'OPTION1=#{args[0]} OPTION2=#{args[1]}"
+      system("ssh -t -q #{server} #{options} ./#{method_name}.sh'")
       `ssh -t -q #{server} 'rm ~/#{method_name}.sh'`
     end
   end
