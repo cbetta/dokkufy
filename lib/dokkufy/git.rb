@@ -6,17 +6,15 @@ module Dokkufy
     end
 
     def dokku_remote
-      @dokku_remote ||= git_remote || dokkufile_remote
+      @dokku_remote ||= git_remote
     end
 
     def dokku_remote=(remote)
       @dokku_remote = remote
-      set_git_remote
-      set_dokkufile_remote
+      self.git_remote=(remote)
     end
 
     def clear
-      `rm .dokkurc`
       `git remote remove dokku`
     end
 
@@ -30,22 +28,9 @@ module Dokkufy
       nil
     end
 
-    def dokkufile_remote
-      output = File.open(".dokkurc").read
-      return output.strip unless output.empty?
-    rescue
-      nil
-    end
-
-    def set_git_remote
+    def git_remote=(remote)
       puts "Setting git remote"
-      `git remote add dokku #{@dokku_remote}`
+      `git remote add dokku #{remote}`
     end
-
-    def set_dokkufile_remote
-      puts "Writing .dokkurc"
-      `echo #{@dokku_remote} > .dokkurc`
-    end
-
   end
 end
