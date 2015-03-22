@@ -91,6 +91,7 @@ Removes any `dokku` remotes for the local git repository and deletes the `.dokku
 
 ## Release notes
 
+* **0.2.1** Updated the Plugin URL
 * **0.2.0** Dropped Toolchain functionality in favor of other tools
 * **0.1.6** Locking dependencies down further
 * **0.1.5** Using classic style commander
