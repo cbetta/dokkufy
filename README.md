@@ -20,7 +20,6 @@ Want to build your own Heroku? Dokku and Dokkufy make this possible.
 3. Change directories to your app
 4. Dokkufy your app `dokkufy app`
 5. Deploy your app `git push dokku master`
-6. Control your app using the `dokku` command (see `dokku help` for available commands)
 
 ## Commands
 
@@ -36,8 +35,6 @@ dokkufy <command>
   plugin:uninstall  uninstalls a plugin on the server
   app               adds a dokku remote for a server to an app
   app:clear         removes a dokku remote for a server for an app
-
-dokku <command>     runs dokku commands on the server attached to this app
 ```
 
 ### dokkufy server
@@ -92,36 +89,9 @@ dokkufy app:clear
 
 Removes any `dokku` remotes for the local git repository and deletes the `.dokkurc` file.
 
-### dokku
-
-```sh
-dokku <command>
-```
-
-Runs the command on the Dokku server attached to this app. Intelligently determines the remote address if the app has been dokkufied, and automatically adds the app name where needed.
-
-Some examples:
-
-```sh
-dokku help    # runs `dokku help` on server
-dokku run ls  # runs `dokku run <app_name> ls` on server
-```
-
-Every `dokku` command translates to an auto generated ssh call. The `<app_name>` is automatically added if the response returns a "App <command> not found".
-
-Some examples
-
-```sh
-cat .dokkurc # content of the .dokkurc
-$ dokku@example.com:test_app
-dokku help
-$ ssh -t dokku@example.com help # the actual command executed
-dokku run ls # a command that requires an app name
-$ ssh -t dokku@example.com run test_app ls
-```
-
 ## Release notes
 
+* **0.2.0** Dropped Toolchain functionality in favor of other tools
 * **0.1.6** Locking dependencies down further
 * **0.1.5** Using classic style commander
 * **0.1.4** Checks for SSH key before installing on server
