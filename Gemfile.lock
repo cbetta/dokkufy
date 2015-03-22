@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dokkufy (0.1.5)
+    dokkufy (0.2.0)
       commander (~> 4.2.0)
       hpricot (~> 0.8.6)
       terminal-table (~> 1.4.5)
@@ -9,7 +9,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    commander (4.2.0)
+    commander (4.2.1)
       highline (~> 1.6.11)
     highline (1.6.21)
     hpricot (0.8.6)
