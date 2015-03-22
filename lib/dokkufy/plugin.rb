@@ -23,7 +23,7 @@ module Dokkufy
 
     def self.all with_notes = false
       return @plugins if @plugins
-      open("https://github.com/progrium/dokku/wiki/Plugins") do |f|
+      open("http://progrium.viewdocs.io/dokku/plugins") do |f|
         hp = Hpricot(f)
         plugins = hp.search("tbody tr td").each_slice(3)
         @plugins = plugins.each_with_index.map do |plugin, index|
