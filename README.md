@@ -55,7 +55,7 @@ Optionally this takes a `<version>` to specify the [Dokku tag](https://github.co
 dokkufy plugin:list
 ```
 
-Lists all plugins as listed on the [Dokku wiki](https://github.com/progrium/dokku/wiki/Plugins). Only supports plugins that follow the standard install procedure.
+Lists all plugins as listed on the [Dokku wiki](http://progrium.viewdocs.io/dokku/plugins/). Only supports plugins that follow the standard install procedure.
 
 ### dokkufy plugin:install
 
